@@ -1,0 +1,23 @@
+{% ckan_extends %}
+
+{# You could remove 'free extras' from the package form like this, but we keep them for this example's tests.
+  {% block custom_fields %}
+  {% endblock %}
+#}
+
+{% block package_metadata_fields %}
+
+{#  <div class="control-group">
+    <label class="control-label" for="field-ruian_type">{{ _("Typ územního prvku RÚIAN") }}</label>
+    <div class="controls">
+      <select id="field-ruian_type" name="ruian_type" data-module="autocomplete">
+        {% for ruian_type in h.ruian_types()  %}
+          <option value="{{ ruian_type }}" {% if ruian_type in data.get('ruian_type', []) %}selected="selected"{% endif %}>{{ ruian_type }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>#}
+
+  {{ super() }}
+
+{% endblock %}

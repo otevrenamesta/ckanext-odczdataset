@@ -1,0 +1,16 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_custom %}
+  {{ form.input('publisher_name', label=_('Poskytovatel dat'), id='field-publisher_name', placeholder=_('OpenData.cz'), value=data.publisher_name, error=errors.publisher_name, classes=['control-medium']) }}
+  {{ form.input('publisher_uri', label=_('URI poskytovatele dat'), id='field-publisher_uri', placeholder=_('http://opendata.cz'), value=data.publisher_uri, error=errors.publisher_uri, classes=['control-medium']) }}
+  {{ form.input('license_link', label=_('Vlastní podmínky užití/licence'), id='field-license_link', placeholder=_('http://www.ctu.cz/otevrena-data/podminky-uziti.html'), value=data.license_link, error=errors.license_link, classes=['control-medium']) }}
+  {{ form.input('frequency', label=_('Periodicita aktualizace'), id='field-frequency', placeholder=_('R/P1Y'), value=data.frequency, error=errors.frequency, classes=['control-medium']) }}
+  {{ form.input('spatial_uri', label=_('URI souvisejícího geografického území'), id='field-spatial_uri', placeholder=_('http://ruian.linked.opendata.cz/resource/staty/1'), value=data.spatial_uri, error=errors.spatial_uri, classes=['control-medium']) }}
+  {{ form.input('ruian_type', label=_('Typ územního prvku RÚIAN'), id='field-ruian_type', placeholder=_('ST'), value=data.ruian_type, error=errors.ruian_type, classes=['control-medium']) }}
+  {{ form.input('ruian_code', label=_('Kód územního prvku RÚIAN'), id='field-ruian_code', placeholder=_('1'), value=data.ruian_code, error=errors.ruian_code, classes=['control-medium']) }}
+  {{ form.input('theme', label=_('URI klasifikace EUROVOC'), id='field-theme', placeholder=_('http://eurovoc.europa.eu/6139'), value=data.theme, error=errors.theme, classes=['control-medium']) }}
+  {{ form.input('schema', label=_('Schéma'), id='field-schema', placeholder=_('http://www.ctu.cz/schema.zip'), value=data.schema, error=errors.schema, classes=['control-medium']) }}
+  {{ form.input('temporal_start', label=_('Časové pokrytí od'), id='field-temporalStart', placeholder=_('2014-01-01'), value=data.temporal_start, error=errors.temporalStart, classes=['control-medium']) }}
+  {{ form.input('temporal_end', label=_('Časové pokrytí do'), id='field-temporalEnd', placeholder=_('2014-03-31'), value=data.temporal_end, error=errors.temporalEnd, classes=['control-medium']) }}
+
+{% endblock %}

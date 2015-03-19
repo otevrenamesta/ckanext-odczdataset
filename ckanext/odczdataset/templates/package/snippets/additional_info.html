@@ -1,0 +1,65 @@
+{% ckan_extends %}
+
+{% block extras %}
+  {% if pkg_dict.license_link %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Vlastní licence") }}</th>
+      <td class="dataset-details"><a href="{{ pkg_dict.license_link }}">{{ pkg_dict.license_link }}</a></td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.publisher_name %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Poskytovatel dat") }}</th>
+      <td class="dataset-details">{% if pkg_dict.publisher_uri %}<a href="{{ pkg_dict.publisher_uri }}"> {% endif %} {{ pkg_dict.publisher_name }} {% if pkg_dict.publisher_uri %} </a> {% endif %}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.frequency %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Periodicita aktualizace") }}</th>
+      <td class="dataset-details">{{ pkg_dict.frequency }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.spatial_uri %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("URI souvisejícího geografického území") }}</th>
+      <td class="dataset-details"><a href="{{ pkg_dict.spatial_uri }}">{{ pkg_dict.spatial_uri }}</a></td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.ruian_type %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Typ územního prvku RÚIAN") }}</th>
+      <td class="dataset-details">{{ pkg_dict.ruian_type }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.ruian_code %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Kód územního prvku RÚIAN") }}</th>
+      <td class="dataset-details">{{ pkg_dict.ruian_code }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.theme %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Klasifikace dle EUROVOC") }}</th>
+      <td class="dataset-details">{{ pkg_dict.theme }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.schema %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("URL dokumentace datové sady") }}</th>
+      <td class="dataset-details"><a href="{{ pkg_dict.schema }}">{{ pkg_dict.schema }}</a></td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.temporal_start %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Časové pokrytí od") }}</th>
+      <td class="dataset-details">{{ pkg_dict.temporal_start }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.temporal_end %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Časové pokrytí do") }}</th>
+      <td class="dataset-details">{{ pkg_dict.temporal_end }}</td>
+    </tr>
+  {% endif %}
+
+{% endblock %}
