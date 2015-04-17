@@ -8,8 +8,5 @@
   {{ form.input('describedByType', label=_('MIME typ schematu'), id='field-describedByType', placeholder=_('text/csv'), value=data.describedByType, error=errors.describedByType, classes=['control-medium']) }}
   {{ form.input('temporal_start', label=_('Časové pokrytí od'), id='field-temporal_start', placeholder=_('2014-01-01'), value=data.temporal_start, error=errors.temporal_start, classes=['control-medium']) }}
   {{ form.input('temporal_end', label=_('Časové pokrytí do'), id='field-temporal_end', placeholder=_('2014-12-31'), value=data.temporal_end, error=errors.temporal_end, classes=['control-medium']) }}
-  {{ form.input('ruian_type', label=_('Typ územního prvku RÚIAN'), id='field-ruian_type', placeholder=_('ST'), value=data.ruian_type, error=errors.ruian_type, classes=['control-medium']) }}
-  {{ form.input('ruian_code', label=_('Kód územního prvku RÚIAN'), id='field-ruian_code', placeholder=_('1'), value=data.ruian_code, error=errors.ruian_code, classes=['control-medium']) }}
-  {{ form.input('spatial_uri', label=_('Územní prvek RUIAN'), id='field-spatial_uri', placeholder=_('http://ruian.linked.opendata.cz/resource/stat/1'), value=data.spatial_uri, error=errors.spatial_uri, classes=['control-medium']) }}
 
 {% endblock %}
