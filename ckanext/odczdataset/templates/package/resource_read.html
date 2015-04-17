@@ -1,0 +1,60 @@
+{% ckan_extends %}
+
+{% block resource_additional_information_inner %}
+<div class="module-content">
+          <h2>{{ _('Additional Information') }}</h2>
+          <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">
+            <thead>
+              <tr>
+                <th scope="col">{{ _('Field') }}</th>
+                <th scope="col">{{ _('Value') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">{{ _('Last updated') }}</th>
+                <td>{{ h.render_datetime(res.last_modified) or h.render_datetime(res.revision_timestamp) or h.render_datetime(res.created) or _('unknown') }}</td>
+              </tr>
+              <tr>
+                <th scope="row">{{ _('Created') }}</th>
+                <td>{{ h.render_datetime(res.created) or _('unknown') }}</td>
+              </tr>
+              <tr>
+                <th scope="row">{{ _('Format') }}</th>
+                <td>{{ res.mimetype_inner or res.mimetype or res.format or _('unknown') }}</td>
+              </tr>
+  	      {% if res.license_link %}
+	      <tr>
+		      <th scope="row" >{{ _("Vlastní licence") }}</th>
+		      <td ><a href="{{ res.license_link }}">{{ res.license_link }}</a></td>
+	      </tr>
+	      {% endif %}
+  	      {% if res.temporal_start %}
+	      <tr>
+		      <th scope="row" >{{ _("Časové pokrytí od") }}</th>
+		      <td >{{ res.temporal_start }}</td>
+	      </tr>
+	      {% endif %}
+  	      {% if res.temporal_end %}
+	      <tr>
+		      <th scope="row" >{{ _("Časové pokrytí do") }}</th>
+		      <td >{{ res.temporal_end }}</td>
+	      </tr>
+	      {% endif %}
+  	      {% if res.describedBy %}
+	      <tr>
+		      <th scope="row" >{{ _("Schéma datového zdroje") }}</th>
+		      <td ><a href="{{ res.describedBy }}">{{ res.describedBy }}</a></td>
+	      </tr>
+	      {% endif %}
+  	      {% if res.describedByType %}
+	      <tr>
+		      <th scope="row" >{{ _("Formát schematu datového zdroje") }}</th>
+		      <td >{{ res.describedByType }}</td>
+	      </tr>
+	      {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+{% endblock %}
