@@ -25,31 +25,31 @@
               </tr>
   	      {% if res.license_link %}
 	      <tr>
-		      <th scope="row" >{{ _("Vlastní licence") }}</th>
+		      <th scope="row" >{{ _("Odkaz na podmínky užití") }}</th>
 		      <td ><a href="{{ res.license_link }}">{{ res.license_link }}</a></td>
 	      </tr>
 	      {% endif %}
   	      {% if res.temporal_start %}
 	      <tr>
-		      <th scope="row" >{{ _("Časové pokrytí od") }}</th>
+		      <th scope="row" >{{ _("Dotčené časové období od") }}</th>
 		      <td >{{ res.temporal_start }}</td>
 	      </tr>
 	      {% endif %}
   	      {% if res.temporal_end %}
 	      <tr>
-		      <th scope="row" >{{ _("Časové pokrytí do") }}</th>
+		      <th scope="row" >{{ _("Dotčené časové období do") }}</th>
 		      <td >{{ res.temporal_end }}</td>
 	      </tr>
 	      {% endif %}
   	      {% if res.describedBy %}
 	      <tr>
-		      <th scope="row" >{{ _("Schéma datového zdroje") }}</th>
+		      <th scope="row" >{{ _("Odkaz na schéma datového zdroje") }}</th>
 		      <td ><a href="{{ res.describedBy }}">{{ res.describedBy }}</a></td>
 	      </tr>
 	      {% endif %}
   	      {% if res.describedByType %}
 	      <tr>
-		      <th scope="row" >{{ _("Formát schematu datového zdroje") }}</th>
+		      <th scope="row" >{{ _("Formát schématu datového zdroje") }}</th>
 		      <td >{{ res.describedByType }}</td>
 	      </tr>
 	      {% endif %}

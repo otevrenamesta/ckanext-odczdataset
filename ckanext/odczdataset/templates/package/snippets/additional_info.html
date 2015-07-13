@@ -3,7 +3,7 @@
 {% block extras %}
   {% if pkg_dict.license_link %}
     <tr>
-      <th scope="row" class="dataset-label">{{ _("Vlastní licence") }}</th>
+      <th scope="row" class="dataset-label">{{ _("Odkaz na podmínky užití") }}</th>
       <td class="dataset-details"><a href="{{ pkg_dict.license_link }}">{{ pkg_dict.license_link }}</a></td>
     </tr>
   {% endif %}
@@ -45,19 +45,19 @@
   {% endif %}
   {% if pkg_dict.schema %}
     <tr>
-      <th scope="row" class="dataset-label">{{ _("URL dokumentace datové sady") }}</th>
+      <th scope="row" class="dataset-label">{{ _("Odkaz na dokumentaci datové sady") }}</th>
       <td class="dataset-details"><a href="{{ pkg_dict.schema }}">{{ pkg_dict.schema }}</a></td>
     </tr>
   {% endif %}
   {% if pkg_dict.temporal_start %}
     <tr>
-      <th scope="row" class="dataset-label">{{ _("Časové pokrytí od") }}</th>
+      <th scope="row" class="dataset-label">{{ _("Dotčené časové období od") }}</th>
       <td class="dataset-details">{{ pkg_dict.temporal_start }}</td>
     </tr>
   {% endif %}
   {% if pkg_dict.temporal_end %}
     <tr>
-      <th scope="row" class="dataset-label">{{ _("Časové pokrytí do") }}</th>
+      <th scope="row" class="dataset-label">{{ _("Dotčené časové období do") }}</th>
       <td class="dataset-details">{{ pkg_dict.temporal_end }}</td>
     </tr>
   {% endif %}

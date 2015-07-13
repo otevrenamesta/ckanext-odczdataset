@@ -3,10 +3,10 @@
 {% block basic_fields_url %}
 {{ super() }}
 
-  {{ form.input('license_link', label=_('Licence datového zdroje'), id='field-license_link', placeholder=_('http://www.ctu.cz/otevrena-data/podminky-uziti.html'), value=data.license_link, error=errors.license_link, classes=['control-medium']) }}
-  {{ form.input('describedBy', label=_('Schema datového zdroje'), id='field-describedBy', placeholder=_('http://www.ctu.cz/common/open_data/23/20_prehled_platnych_individualnich_opravneni_televizni_vysilace_schema.csv'), value=data.describedBy, error=errors.describedBy, classes=['control-medium']) }}
-  {{ form.input('describedByType', label=_('MIME typ schematu'), id='field-describedByType', placeholder=_('text/csv'), value=data.describedByType, error=errors.describedByType, classes=['control-medium']) }}
-  {{ form.input('temporal_start', label=_('Časové pokrytí od'), id='field-temporal_start', placeholder=_('2014-01-01'), value=data.temporal_start, error=errors.temporal_start, classes=['control-medium']) }}
-  {{ form.input('temporal_end', label=_('Časové pokrytí do'), id='field-temporal_end', placeholder=_('2014-12-31'), value=data.temporal_end, error=errors.temporal_end, classes=['control-medium']) }}
+  {{ form.input('license_link', label=_('Odkaz na podmínky užití'), id='field-license_link', placeholder=_('http://www.ctu.cz/otevrena-data/podminky-uziti.html'), value=data.license_link, error=errors.license_link, classes=['control-medium']) }}
+  {{ form.input('describedBy', label=_('Schéma datového zdroje'), id='field-describedBy', placeholder=_('http://www.ctu.cz/common/open_data/23/20_prehled_platnych_individualnich_opravneni_televizni_vysilace_schema.csv'), value=data.describedBy, error=errors.describedBy, classes=['control-medium']) }}
+  {{ form.input('describedByType', label=_('MIME typ schématu'), id='field-describedByType', placeholder=_('text/csv'), value=data.describedByType, error=errors.describedByType, classes=['control-medium']) }}
+  {{ form.input('temporal_start', label=_('Dotčené časové období od'), id='field-temporal_start', placeholder=_('2014-01-01'), value=data.temporal_start, error=errors.temporal_start, classes=['control-medium']) }}
+  {{ form.input('temporal_end', label=_('Dotčené časové období do'), id='field-temporal_end', placeholder=_('2014-12-31'), value=data.temporal_end, error=errors.temporal_end, classes=['control-medium']) }}
 
 {% endblock %}
