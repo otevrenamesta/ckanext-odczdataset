@@ -1,8 +1,8 @@
 {% ckan_extends %}
 
 {% block package_basic_fields_custom %}
-  {{ form.input('publisher_name', label=_('Poskytovatel dat'), id='field-publisher_name', placeholder=_('OpenData.cz'), value=data.publisher_name, error=errors.publisher_name, classes=['control-medium']) }}
-  {{ form.input('publisher_uri', label=_('URI poskytovatele dat'), id='field-publisher_uri', placeholder=_('http://opendata.cz'), value=data.publisher_uri, error=errors.publisher_uri, classes=['control-medium']) }}
+  {{ form.input('publisher_name', label=_('Poskytovatel dat'), id='field-publisher_name', placeholder=_('Hlavní město Praha'), value=data.publisher_name, error=errors.publisher_name, classes=['control-medium']) }}
+  {{ form.input('publisher_uri', label=_('URI poskytovatele dat'), id='field-publisher_uri', placeholder=_('http://opendata.praha.eu'), value=data.publisher_uri, error=errors.publisher_uri, classes=['control-medium']) }}
   {{ form.input('license_link', label=_('Odkaz na podmínky užití'), id='field-license_link', placeholder=_('http://www.ctu.cz/otevrena-data/podminky-uziti.html'), value=data.license_link, error=errors.license_link, classes=['control-medium']) }}
   {{ form.input('frequency', label=_('Periodicita aktualizace'), id='field-frequency', placeholder=_('R/P1Y'), value=data.frequency, error=errors.frequency, classes=['control-medium']) }}
   {{ form.input('spatial_uri', label=_('URI souvisejícího geografického území'), id='field-spatial_uri', placeholder=_('http://ruian.linked.opendata.cz/resource/staty/1'), value=data.spatial_uri, error=errors.spatial_uri, classes=['control-medium']) }}
