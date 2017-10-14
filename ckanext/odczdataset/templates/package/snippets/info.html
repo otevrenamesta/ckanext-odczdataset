@@ -1,0 +1,8 @@
+{% ckan_extends %}
+{% block package_info %}
+  {{ super() }}
+  {% if '/edit/' in h.current_url() %}
+    {% snippet 'package/snippets/sidebar_items_description.html' %}
+  {% endif %}
+{% endblock %}
+

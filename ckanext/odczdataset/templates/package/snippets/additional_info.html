@@ -51,15 +51,31 @@
   {% endif %}
   {% if pkg_dict.temporal_start %}
     <tr>
-      <th scope="row" class="dataset-label">{{ _("Dotčené časové období od") }}</th>
+      <th scope="row" class="dataset-label">{{ _("Dotčené časové období datové sady od") }}</th>
       <td class="dataset-details">{{ pkg_dict.temporal_start }}</td>
     </tr>
   {% endif %}
   {% if pkg_dict.temporal_end %}
     <tr>
-      <th scope="row" class="dataset-label">{{ _("Dotčené časové období do") }}</th>
+      <th scope="row" class="dataset-label">{{ _("Dotčené časové období datové sady do") }}</th>
       <td class="dataset-details">{{ pkg_dict.temporal_end }}</td>
     </tr>
   {% endif %}
+
+{# hledám jak vrátit zpět, aby se nepral redmine a syndicate)
+  {% if pkg_dict.redmine_url %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("URL Tiketu") }}</th>
+      <td class="dataset-details">
+        <a href="{{ pkg_dict.redmine_url }}">URL</a>
+      </td>
+    </tr>
+
+  {% endif %} 
+  {# {{ super() }} #}
+  {# {{ pkg_dict }} #}
+  {# {{ pkg_dict.tags }} #}
+
+  {# snippet 'package/snippets/additional_info_extra.html', extras=pkg_dict.extras #}
 
 {% endblock %}

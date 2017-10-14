@@ -1,0 +1,12 @@
+{% extends 'package/edit_base.html' %}
+
+{% block styles %}
+  {{ super() }}
+  {% resource 'odczdataset/bootstrap-datepicker3.min.css' %}
+{% endblock %}
+
+{% block content_action %}
+  {% snippet 'package/snippets/checkbox_expert.html' %}
+  {{ super() }}
+{% endblock %}
+

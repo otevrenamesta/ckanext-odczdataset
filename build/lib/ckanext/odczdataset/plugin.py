@@ -161,13 +161,10 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
       'ruian_types': ruian_types
     }
   
-  def _modify_package_schema(self, schema):
+
+  def _create_package_schema(self, schema):
         schema.update({
             'md_syndicate': [tk.get_validator('ignore_missing'),
-                            tk.get_converter('convert_to_extras')],
-            'md_syndicated_id': [tk.get_validator('ignore_missing'),
-                            tk.get_converter('convert_to_extras')],
-            'md_ticket_url': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
             'md_sharing_level': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
@@ -180,6 +177,10 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
             'md_ticket_private': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
             'md_ticket_public': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_harvester': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_harvested_url': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
             'md_delivery': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
@@ -227,12 +228,77 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
   def create_package_schema(self):
         # let's grab the default schema in our plugin
         schema = super(ODCZDatasetFormPlugin, self).create_package_schema()
-        schema = self._modify_package_schema(schema)
+        schema = self._create_package_schema(schema)
         return schema
+
+  def _update_package_schema(self, schema):
+        schema.update({
+            'md_syndicate': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_sharing_level': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_state': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_gdpr': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_primary_source': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_ticket_private': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_ticket_public': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_harvester': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_harvested_url': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_delivery': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'publisher_name': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'publisher_uri': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'frequency': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'ruian_code': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'ruian_type': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+#                            tk.get_converter('convert_to_tags')('ruian_types')],
+            'spatial_uri': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'theme': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'temporal_start': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'temporal_end': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'schema': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'license_link': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+
+            })
+
+	schema['resources'].update({
+            'md_sha' : [ tk.get_validator('ignore_missing') ],
+            'testing' : [ tk.get_validator('ignore_missing') ],
+            'license_link' : [ tk.get_validator('ignore_missing') ],
+            'describedBy' : [ tk.get_validator('ignore_missing') ],
+            'describedByType' : [ tk.get_validator('ignore_missing') ],
+            'temporal_start' : [ tk.get_validator('ignore_missing') ],
+            'temporal_end' : [ tk.get_validator('ignore_missing') ],
+            'spatial_uri' : [ tk.get_validator('ignore_missing') ],
+            'ruian_type' : [ tk.get_validator('ignore_missing') ],
+            'ruian_code' : [ tk.get_validator('ignore_missing') ]
+            })
+
+        return schema
+
+
 
   def update_package_schema(self):
         schema = super(ODCZDatasetFormPlugin, self).update_package_schema()
-        schema = self._modify_package_schema(schema)
+        schema = self._update_package_schema(schema)
         return schema
 
   def show_package_schema(self):
@@ -240,10 +306,6 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
         schema['tags']['__extras'].append(tk.get_converter('free_tags_only'))
         schema.update({
             'md_syndicate': [tk.get_converter('convert_from_extras'),
-                            tk.get_validator('ignore_missing')],
-            'md_syndicated_id': [tk.get_converter('convert_from_extras'),
-                            tk.get_validator('ignore_missing')],
-            'md_ticket_url': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
             'md_sharing_level': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
@@ -256,6 +318,10 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
             'md_ticket_private': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
             'md_ticket_public': [tk.get_converter('convert_from_extras'),
+                            tk.get_validator('ignore_missing')],
+            'md_harvester': [tk.get_converter('convert_from_extras'),
+                            tk.get_validator('ignore_missing')],
+            'md_harvested_url': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
             'md_delivery': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
