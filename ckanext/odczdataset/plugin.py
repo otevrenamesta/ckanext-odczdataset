@@ -17,8 +17,7 @@ def frequencies():
     {'value': 'R/T1H', 'text': u'hodinová'},
     {'value': 'R/T30M', 'text': u'30 minut'},
     {'value': 'R/T2M', 'text': u'2 minuty'},
-    {'value': 'continuously', 'text': u'průběžná'},
-    {'value': 'according to need', 'text': u'dle potřeby'},
+    {'value': 'R/PT1S', 'text': u'průběžná'},
     ]
 
 def md_sharing_levels():
@@ -54,16 +53,63 @@ def create_ruian_types():
             data = {'name': tag, 'vocabulary_id': vocab['id']}
             tk.get_action('tag_create')(context, data)
 
-def ruian_types():
-    logging.info("ruiantypes")
-    create_ruian_types()
-    try:
-        tag_list = tk.get_action('tag_list')
-        ruian_types = tag_list(data_dict={'vocabulary_id': 'ruian_types'})
-        return ruian_types
-    except tk.ObjectNotFound:
-        return None
-
+def md_ruian_types():
+  return [
+    {'value': 'AD', 'text': u'Adresní místo'},
+    {'value': 'BPA', 'text': u'Bonitovaný díl parcely'},
+    {'value': 'CO', 'text': u'Část obce'},
+    {'value': 'DAM', 'text': u'Definiční bod adresního místa'},
+    {'value': 'DKU', 'text': u'Definiční bod přehledové mapy katastrálního území'},
+    {'value': 'DPA', 'text': u'Definiční bod katastrální mapy pro parcely'},
+    {'value': 'DSO', 'text': u'Definiční bod stavebního objektu'},
+    {'value': 'DUC', 'text': u'Definiční bod přehledové mapy pro vyšší územní celky, VO a ZSJ.'},
+    {'value': 'DUL', 'text': u'Definiční čára ulice'},
+    {'value': 'DUP', 'text': u'Def. Bod účelového prvku'},
+    {'value': 'GKU', 'text': u'Generalizované hranice katastrálního území'},
+    {'value': 'GOB', 'text': u'Generalizované hranice obce, vojenského újezdu'},
+    {'value': 'GUP', 'text': u'Gen. polygon účelového prvku'},
+    {'value': 'HKU', 'text': u'Hranice katastrálního území'},
+    {'value': 'HMC', 'text': u'Hranice městského obvodu nebo městské části územně členěného statutárního města'},
+    {'value': 'HOB', 'text': u'Hranice pro vyšší územní celky'},
+    {'value': 'HVO', 'text': u'Hranice volebního okrsku'},
+    {'value': 'HZJ', 'text': u'Hranice území základní sídelní jednotky'},
+    {'value': 'IKU', 'text': u'Generalizované polygony katastrálního území'},
+    {'value': 'KR', 'text': u'Území kraje'},
+    {'value': 'KU', 'text': u'Katastrální území'},
+    {'value': 'MC', 'text': u'Území městského obvodu nebo městské části územně členěného statutárního města'},
+    {'value': 'MP', 'text': u'Území městského obvodu v hlavním městě Praze'},
+    {'value': 'OB', 'text': u'Území obce, území vojenského újezdu'},
+    {'value': 'OK', 'text': u'Území okresu'},
+    {'value': 'OP', 'text': u'Správní obvod obce s rozšířenou působností'},
+    {'value': 'PA', 'text': u'Pozemek v podobě parcely'},
+    {'value': 'PKU', 'text': u'Polygony katastrálního území'},
+    {'value': 'PMC', 'text': u'Polygony území městského obvodu nebo městské části územně členěného statutárního města'},
+    {'value': 'PO', 'text': u'Adresní pošta'},
+    {'value': 'PPA', 'text': u'Polygony pozemku v podobě parcely'},
+    {'value': 'PSO', 'text': u'Polygony stavebního objektu'},
+    {'value': 'PU', 'text': u'Správní obvod obce s pověřeným obecním úřadem'},
+    {'value': 'PUP', 'text': u'Polygon účelového prvku'},
+    {'value': 'PVO', 'text': u'Polygony volebního okrsku'},
+    {'value': 'PZJ', 'text': u'Polygony území základní sídelní jednotky'},
+    {'value': 'RS', 'text': u'Území regionu soudržnosti'},
+    {'value': 'SO', 'text': u'Stavební objekt'},
+    {'value': 'SP', 'text': u'Správní obvod v hlavním městě Praze'},
+    {'value': 'ST', 'text': u'Území státu'},
+    {'value': 'TEA', 'text': u'Detailní technicko ekonomické atributy'},
+    {'value': 'UL', 'text': u'Ulice nebo jiné veřejné prostranství'},
+    {'value': 'UP', 'text': u'Účelový prvek'},
+    {'value': 'VC', 'text': u'Území vyššího územně samosprávného celku'},
+    {'value': 'VO', 'text': u'Volební okrsek'},
+    {'value': 'ZJ', 'text': u'Území základní sídelní jednotky'},
+    {'value': 'ZPA', 'text': u'Způsob ochrany parcely'},
+    {'value': 'ZSO', 'text': u'Způsob ochrany stavebního objektu'},
+    ]
+      
+def md_ruian_codes():
+  return [
+    {'value': '1', 'text': u'Městská část'},
+    {'value': '2', 'text': u'Městský obvod'},
+    ]
 
 class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
   p.implements(p.IDatasetForm, inherit=True)
@@ -158,7 +204,8 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
       'frequencies': frequencies,
       'md_sharing_levels': md_sharing_levels,
       'md_states': md_states,
-      'ruian_types': ruian_types
+      'md_ruian_types': md_ruian_types,
+      'md_ruian_codes': md_ruian_codes,
     }
   
   def _modify_package_schema(self, schema):
