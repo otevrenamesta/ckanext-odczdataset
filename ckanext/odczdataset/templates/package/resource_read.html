@@ -53,10 +53,10 @@
 		      <td >{{ res.describedByType }}</td>
 	      </tr>
 	      {% endif %}
-  	      {% if res.md_sha %}
+  	      {% if res.hash %}
 	      <tr>
-		      <th scope="row" >{{ _("SHA256 hash") }}</th>
-		      <td >{{ res.mda_sha }}</td>
+		      <th scope="row" >{{ _("Otisk") }}</th>
+		      <td >{{ res.hash }}</td>
 	      </tr>
 	      {% endif %}
             </tbody>

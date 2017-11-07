@@ -2,9 +2,10 @@
 
 {% block package_basic_fields_custom %}
 
-{#
-  {{ form.input('md_redmine', label=_('Úkolyy'), id='field-md_redmine', placeholder=_('URL tiketu'), value=data.md_redmine, error=errors.publisher_name, classes=['control-medium']) }}
-#}
+  {{ form.checkbox('md_syndicate', label=_('Syndikovat'), id='field-md_syndicate', value=true, checked=data.md_syndicate, error=errors.md_syndicate) }} 
+  {{ form.input('md_syndicated_id', label=_('ID syndikátu'), id='field-md_syndicated_id', placeholder=_('ID syndikátu'), value=data.md_syndicated_id, error=errors.md_syndicated_id, type='email') }}
+
+  {{ form.input('md_ticket_url', label=_('Tiket'), id='field-md_ticket_url', placeholder=_('URL tiketu'), value=data.md_ticket_url, error=errors.md_ticket_url, type='email') }}
 
   {{ form.select('md_sharing_level', label=_('Stupeň sdílení'), id='field-md_sharing_level',  options=h.md_sharing_levels(), selected=data.md_sharing_level, error=errors.md_sharing_level) }}
   {{ form.select('md_state', label=_('Stav'), id='field-md_state', options=h.md_states(), selected=data.md_state, error=errors.md_states) }}
@@ -41,8 +42,8 @@
 
   {{ form.input('theme', label=_('URI konceptu klasifikace EUROVOC'), id='field-theme', placeholder=_('http://eurovoc.europa.eu/6139'), value=data.theme, error=errors.theme, classes=['control-medium']) }}
   {{ form.input('schema', label=_('Odkaz na dokumentaci datové sady'), id='field-schema', placeholder=_('http://www.ctu.cz/schema.zip'), value=data.schema, error=errors.schema, classes=['control-medium']) }}
-  {{ form.input('temporal_start', label=_('Dotčené časové období datové sady od'), id='field-temporal_start', placeholder=_('2014-01-01'), value=data.temporal_start, error=errors.temporalStart, classes=['control-medium', 'md_datepicker']) }}
-  {{ form.input('temporal_end', label=_('Dotčené časové období datové sady do'), id='field-temporal_end', placeholder=_('2014-03-31'), value=data.temporal_end, error=errors.temporalEnd, classes=['control-medium', 'md_datepicker']) }}
+  {{ form.input('temporal_start', label=_('Dotčené časové období datové sady od'), id='field-temporal_start', placeholder=_('2014-01-01'), value=data.temporal_start, error=errors.temporalStart, classes=['control-medium'], attrs={'class': 'md_datepicker'}) }}
+  {{ form.input('temporal_end', label=_('Dotčené časové období datové sady do'), id='field-temporal_end', placeholder=_('2014-03-31'), value=data.temporal_end, error=errors.temporalEnd, classes=['control-medium'], attrs={'class': 'md_datepicker'}) }}
   <div>{{ form.input('md_harvester', label=_('Agregováno u'), id='field-md_harvester', placeholder=_('00025593'), value=data.md_harvester, error=errors.md_harvester, classes=['control-medium']) }}
 					    <span class="info-block info-inline select2-hidden-accessible">
 					      <i class="fa fa-info-circle"></i>
@@ -54,14 +55,9 @@
   {{ form.input('md_harvested_url', label=_('Agregováno na'), id='field-md_harvested_url', placeholder=_('URL'), value=data.md_harvested_url, error=errors.md_harvested_url, classes=['control-medium']) }}
   {{ form.input('md_delivery', label=_('Výdej'), id='field-md_delivery', placeholder=_('URL výdejního místa'), value=data.md_delivery, error=errors.md_delivery, classes=['control-medium']) }}
 
-  {{ form.input('md_ticket_url', label=_('Tiket'), id='field-md_ticket_url', placeholder=_('URL tiketu'), value=data.md_ticket_url, error=errors.md_ticket_url, classes=['X_select2-hidden-accessible'], type='url', attrs={'readonly': 'true'} ) }}
-
-  {{ form.checkbox('md_syndicate', label=_('Syndikovat'), id='field-md_syndicate', value=true, checked=data.md_syndicate, error=errors.md_syndicate) }} 
-
-  {{ form.input('md_syndicated_id', label=_('ID syndikátu'), id='field-md_syndicated_id', placeholder=_('ID syndikátu'), value=data.md_syndicated_id, error=errors.md_syndicated_id, type='url', attrs={'rreadonly': 'false'} ) }}
-
-{# system fields #}
-  {{ form.input('md_roles', label=_('Role'), id='field-md_roles', placeholder=_(''), value=h.roles_translated(), error=errors.md_roles, classes=['select2-hidden-accessible']) }} 
-  {{ form.input('md_license', label=_('Licence:system'), id='field-md_license', placeholder=_(''), value=data.get('license_id'), error=errors.md_license, classes=['select2-hidden-accessible']) }} 
+  {# system fields - START #}
+  {{ form.input('md_syndicate_manually', label=_('Syndicate manually'), id='field-md_syndicate_manually', placeholder=_(''), value=h.md_get_syndicate_manually(), error=errors.md_syndicate_manually, classes=['select2-hidden-accessible']) }} 
+  {{ form.input('md_is_group_admin', label=_('Is group admin'), id='field-md_is_group_admin', placeholder=_(''), value=h.check_access('organization_member_create', {'id': data.id}), error=errors.md_is_group_admin, classes=['select2-hidden-accessible']) }} 
+  {# system fields - END #}
 
 {% endblock %}

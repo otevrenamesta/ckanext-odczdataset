@@ -4,6 +4,15 @@ import logging
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 import ckan.plugins.interfaces as interfaces
+from ckan.common import config
+
+asbool = tk.asbool
+
+
+ignore_missing = tk.get_validator('ignore_missing')
+ignore_not_package_admin = tk.get_validator('ignore_not_package_admin')
+boolean_validator = tk.get_validator('boolean_validator')
+datasets_with_no_organization_cannot_be_private = tk.get_validator('datasets_with_no_organization_cannot_be_private')
 
 def frequencies():
   return [
@@ -36,6 +45,12 @@ def md_states():
       {'value': 'in_progress', 'text': u'zpracovávaný'},
       {'value': 'published', 'text': u'publikovaný'},
       {'value': 'closed', 'text': u'ukončený'},
+      ]
+
+def md_gdprs():
+  return [
+      {'value': 'True', 'text': u'ano'},
+      #unchecked checkbox is hidden
       ]
 
 def create_ruian_types():
@@ -111,6 +126,27 @@ def md_ruian_codes():
     {'value': '2', 'text': u'Městský obvod'},
     ]
 
+def md_get_item_value_text(options, value):
+  item, = [item for item in options if item['value'] == value]
+  return item['text']
+
+def get_is_private_catalog():
+  return asbool(config.get('ckan.odczdataset.is_private_catalog', False))
+
+def md_get_syndicate_manually():
+  return asbool(config.get('ckan.odczdataset.syndicate_manually', True))
+
+def set_syndicate_flag_by_sharing_level(key, data, errors, context):
+      if md_get_syndicate_manually():
+        return 
+
+      value = data.get(("md_sharing_level",))
+      if value and value == "open":
+        data[("md_syndicate",)] = True
+      else:
+        data[("md_syndicate",)] = False
+
+
 class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
   p.implements(p.IDatasetForm, inherit=True)
   p.implements(p.IConfigurer)
@@ -135,6 +171,7 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
   #  print 'lala'
   #  return d
 
+
   BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
   def set_SHA(self, context, resource):
@@ -148,7 +185,6 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
 
     #if resource['url_type'] and resource['url_type'] == 'upload':
     if resource['url_type']:
-        print('Updating SHA256 hash')
         sha = hashlib.sha256()
 
         with open(filepath, 'rb') as f:
@@ -158,18 +194,13 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
                     break
                 sha.update(data)
 
-        print("SHA256: {0}".format(sha.hexdigest()))
+        print("hash SHA256: {0}".format(sha.hexdigest()))
 
-        x = ckan.model.Resource.get(resource['id'])
-        print('description: ' +x.description)
-        #print('x.md_sha pred: ' +x.extras['md_sha'])
+        x = ckan.model.Resource.get(resource['id']) #Should be toolkit/plugin?
+        #print('fingerprint' +x.md_fingerprint)
+        #print('x.md_fingerprint PRED: ' +x.extras['md_fingerprint'])
 
-        x.description = sha.hexdigest()
-        #0/0 
-        x.extras.update({
-            'md_sha': sha.hexdigest(),
-            })
-        #0/0
+        x.hash = sha.hexdigest() #it exists in standard sechame but is not being used by standard code. Own would be more safety x I don't know how
 
         session = context['session']
         session.add(x)
@@ -177,12 +208,18 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
         session.commit()
         #0/0
 
-        print('x.md_sha: za:' +x.extras['md_sha'])
-        print('')
-
+    else:
+        if resource['hash']:
+            x = ckan.model.Resource.get(resource['id'])
+            x.hash = ''
+            session = context['session']
+            session.add(x)
+            session.flush()
+            session.commit()
+    
     return True
 
-  def after_create(self, context, resource):
+  def after_courceseate(self, context, resource):
     print('Updating SHA256 hash after create')
     self.set_SHA(context, resource)
 
@@ -204,12 +241,17 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
       'frequencies': frequencies,
       'md_sharing_levels': md_sharing_levels,
       'md_states': md_states,
+      'md_gdprs': md_gdprs,
       'md_ruian_types': md_ruian_types,
       'md_ruian_codes': md_ruian_codes,
+      'md_get_item_value_text': md_get_item_value_text,
+      'md_get_syndicate_manually': md_get_syndicate_manually,
     }
+
   
   def _modify_package_schema(self, schema):
         schema.update({
+            'private': [ignore_missing, boolean_validator, datasets_with_no_organization_cannot_be_private, tk.get_validator('ignore_not_group_admin')],
             'md_syndicate': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
             'md_syndicated_id': [tk.get_validator('ignore_missing'),
@@ -218,6 +260,7 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
                             tk.get_converter('convert_to_extras')],
             'md_sharing_level': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
+            '__before': [ set_syndicate_flag_by_sharing_level],
             'md_state': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
             'md_gdpr': [tk.get_validator('ignore_missing'),
@@ -249,15 +292,18 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
                             tk.get_converter('convert_to_extras')],
             'temporal_end': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
+            'md_harvester': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
+            'md_harvested_url': [tk.get_validator('ignore_missing'),
+                            tk.get_converter('convert_to_extras')],
             'schema': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
             'license_link': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
-
             })
 
 	schema['resources'].update({
-            'md_sha' : [ tk.get_validator('ignore_missing') ],
+            'md_fingerprint' : [ tk.get_validator('ignore_missing') ],
             'testing' : [ tk.get_validator('ignore_missing') ],
             'license_link' : [ tk.get_validator('ignore_missing') ],
             'describedBy' : [ tk.get_validator('ignore_missing') ],
@@ -281,7 +327,7 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
         schema = super(ODCZDatasetFormPlugin, self).update_package_schema()
         schema = self._modify_package_schema(schema)
         return schema
-
+  
   def show_package_schema(self):
         schema = super(ODCZDatasetFormPlugin, self).show_package_schema()
         schema['tags']['__extras'].append(tk.get_converter('free_tags_only'))
@@ -294,6 +340,7 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
                             tk.get_validator('ignore_missing')],
             'md_sharing_level': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
+            '__before': [ set_syndicate_flag_by_sharing_level],
             'md_state': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
             'md_gdpr': [tk.get_converter('convert_from_extras'),
@@ -329,10 +376,14 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
                             tk.get_validator('ignore_missing')],
             'temporal_end': [tk.get_converter('convert_from_extras'),
                             tk.get_validator('ignore_missing')],
+            'md_harvester': [tk.get_converter('convert_from_extras'),
+                            tk.get_validator('ignore_missing')],
+            'md_harvested_url': [tk.get_converter('convert_from_extras'),
+                            tk.get_validator('ignore_missing')],
             })
 
         schema['resources'].update({
-            'md_sha' : [ tk.get_validator('ignore_missing') ],
+            'md_fingerprint' : [ tk.get_validator('ignore_missing') ],
             'testing' : [ tk.get_validator('ignore_missing') ],
             'license_link' : [ tk.get_validator('ignore_missing') ],
             'describedBy' : [ tk.get_validator('ignore_missing') ],
@@ -368,4 +419,5 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
 	# Add this plugin's public dir to CKAN's extra_public_paths, so
         # that CKAN will use this plugin's custom static files.
         tk.add_public_directory(config, 'public')
-  
+
+

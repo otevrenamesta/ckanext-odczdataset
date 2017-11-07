@@ -1,6 +1,30 @@
 {% ckan_extends %}
 
 {% block extras %}
+  {% if pkg_dict.md_sharing_level %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Stupeň sdílení") }}</th>
+      <td class="dataset-details">{{ h.md_get_item_value_text(h.md_sharing_levels(), pkg_dict.md_sharing_level) }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.md_state %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Stav") }}</th>
+      <td class="dataset-details">{{ h.md_get_item_value_text(h.md_states(), pkg_dict.md_state) }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.md_gdpr %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("GDPR") }}</th>
+      <td class="dataset-details">{{ h.md_get_item_value_text(h.md_gdprs(), pkg_dict.md_gdpr) }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.md_ticket_url %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Tiket") }}</th>
+      <td class="dataset-details"><a href="{{ pkg_dict.md_ticket_url }}">{{ pkg_dict.md_ticket_url }}</a></td>
+    </tr>
+  {% endif %}
   {% if pkg_dict.license_link %}
     <tr>
       <th scope="row" class="dataset-label">{{ _("Odkaz na podmínky užití") }}</th>
@@ -16,7 +40,7 @@
   {% if pkg_dict.frequency %}
     <tr>
       <th scope="row" class="dataset-label">{{ _("Periodicita aktualizace") }}</th>
-      <td class="dataset-details">{{ pkg_dict.frequency }}</td>
+      <td class="dataset-details">{{ h.md_get_item_value_text(h.frequencies(), pkg_dict.frequency) }}</td>
     </tr>
   {% endif %}
   {% if pkg_dict.spatial_uri %}
@@ -28,19 +52,19 @@
   {% if pkg_dict.ruian_type %}
     <tr>
       <th scope="row" class="dataset-label">{{ _("Typ územního prvku RÚIAN") }}</th>
-      <td class="dataset-details">{{ pkg_dict.ruian_type }}</td>
+      <td class="dataset-details">{{ h.md_get_item_value_text(h.md_ruian_types(), pkg_dict.ruian_type) }}</td>
     </tr>
   {% endif %}
   {% if pkg_dict.ruian_code %}
     <tr>
       <th scope="row" class="dataset-label">{{ _("Kód územního prvku RÚIAN") }}</th>
-      <td class="dataset-details">{{ pkg_dict.ruian_code }}</td>
+      <td class="dataset-details">{{ h.md_get_item_value_text(h.md_ruian_codes(), pkg_dict.ruian_code) }}</td>
     </tr>
   {% endif %}
   {% if pkg_dict.theme %}
     <tr>
       <th scope="row" class="dataset-label">{{ _("Klasifikace dle EUROVOC") }}</th>
-      <td class="dataset-details">{{ pkg_dict.theme }}</td>
+      <td class="dataset-details"><a href="{{ pkg_dict.theme }}">{{ pkg_dict.theme }}</a></td>
     </tr>
   {% endif %}
   {% if pkg_dict.schema %}
@@ -59,6 +83,24 @@
     <tr>
       <th scope="row" class="dataset-label">{{ _("Dotčené časové období datové sady do") }}</th>
       <td class="dataset-details">{{ pkg_dict.temporal_end }}</td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.md_harvester %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Agregováno u") }}</th>
+      <td class="dataset-details"><a href="http://wwwinfo.mfcr.cz/cgi-bin/ares/ares_es.cgi?xml=1&ico={{ pkg_dict.md_harvester }}">{{ pkg_dict.md_harvester }}</a></td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.md_harvested_url %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Agregováno na") }}</th>
+      <td class="dataset-details"><a href="{{ pkg_dict.md_harvested_url }}">{{ pkg_dict.md_harvested_url }}</a></td>
+    </tr>
+  {% endif %}
+  {% if pkg_dict.md_delivery %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Výdej") }}</th>
+      <td class="dataset-details"><a href="{{ pkg_dict.md_delivery }}">{{ pkg_dict.md_delivery }}</a></td>
     </tr>
   {% endif %}
 

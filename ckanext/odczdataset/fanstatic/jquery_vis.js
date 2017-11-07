@@ -7,8 +7,8 @@ function setDivVisibility(aItems, show) {
 };
 
 function setVisibility() {
-  var allFields = ["field-title", "field-notes", "field-md_sharing_level", "field-md_state", "field-publisher_name", "field-publisher_uri", "field-maintainer_email", "field-maintainer", "field-md_gdpr", "field-md_primary_source", "field-md_ticket_private", "field-md_ticket_public", "field-frequency", "field-spatial_uri", "field-ruian_type", "field-ruian_code", "field-theme", "field-schema", "field-tags", "field-temporal_start", "field-temporal_end", "field-md_harvester", "field-md_harvested_url", "field-md_delivery", "field-resources", "field-url", "field-format", "field-license_link", "field-name", "field-describedBy", "field-describedByType", "field-md_apps", "field-md_apps_title", "field-md_apps_url", "field-md_apps_email", "field-md_apps_notes", "field-license", "field-organizations", "field-private", "field-version", "field-author", "field-author-email", "field-description"]
-	var aExpert = ["field-md_state", "field-publisher_uri", "field-md_gdpr", "field-md_primary_source", "field-spatial_uri", "field-ruian_type", "field-ruian_code", "field-theme", "field-schema", "field-tags", "field-md_harvester", "field-md_harvested_url", "field-md_delivery", "field-license_link", "field-describedBy", "field-describedByType", "field-md_apps", "field-md_apps_title", "field-md_apps_url", "field-md_apps_email", "field-md_apps_notes", "field-license", "field-organizations", "field-version", "field-author", "field-author-email", "field-url", "field-format"];
+  var allFields = ["field-title", "field-notes", "field-md_syndicate", "field-md_syndicated_id", "field-md_sharing_level", "field-md_state", "field-publisher_name", "field-publisher_uri", "field-maintainer_email", "field-maintainer", "field-md_gdpr", "field-md_primary_source", "field-md_ticket_private", "field-md_ticket_public", "field-frequency", "field-spatial_uri", "field-ruian_type", "field-ruian_code", "field-theme", "field-schema", "field-tags", "field-temporal_start", "field-temporal_end", "field-md_harvester", "field-md_harvested_url", "field-md_delivery", "field-resources", "field-url", "field-format", "field-license_link", "field-name", "field-describedBy", "field-describedByType", "field-md_apps", "field-md_apps_title", "field-md_apps_url", "field-md_apps_email", "field-md_apps_notes", "field-license", "field-organizations", "field-private", "field-version", "field-author", "field-author-email", "field-description"]
+	var aExpert = ["field-md_syndicate", "field-md_syndicated_id", "field-md_state", "field-publisher_uri", "field-md_gdpr", "field-md_primary_source", "field-spatial_uri", "field-ruian_type", "field-ruian_code", "field-theme", "field-schema", "field-tags", "field-md_harvester", "field-md_harvested_url", "field-md_delivery", "field-license_link", "field-describedBy", "field-describedByType", "field-md_apps", "field-md_apps_title", "field-md_apps_url", "field-md_apps_email", "field-md_apps_notes", "field-license", "field-organizations", "field-version", "field-author", "field-author-email", "field-url", "field-format"];
 	var toHide = ["field-url"];
 	var toShow = [];
 	var aChoices = {
@@ -49,10 +49,12 @@ function setDefaultValues() {
 };
 
 function hidePrivateField() {
-  var str = $("#field-md_roles").val();
-  if (!~str.indexOf("admin")) {
-    $("#field-private").parent().parent().addClass("select2-hidden-accessible");
-  };
+  if ($("#field-md_syndicate_manually").val() == "False") $("#field-md_syndicate").parent().parent().addClass("select2-hidden-accessible");
+  if ($("#field-md_is_group_admin").val() == "True") return true;
+
+  $("#field-private").parent().parent().addClass("select2-hidden-accessible");
+  $("#field-md_syndicate").parent().parent().addClass("select2-hidden-accessible");
+  $("#field-md_syndicated_id").parent().parent().addClass("select2-hidden-accessible");
 };
 
 $("#field-md_expert_display").change(function() {  //změna zaškrtnutí "expert"
@@ -77,25 +79,3 @@ $(document).ready(function() {  //načtení dokumentu
         setDatePicker();
 });
 
-
-/*
-ckan.module('jquery_vis', function ($) {
-  return {
-    initialize: function () {
-      //alert("ahoj");
-    opt = "Xdef";
-      //$('select#st option:selected').val();
-    abcinput = $("#field-publisher_name");
-    definput = $("#field-publisher_uri");
-    //console.log(opt);
-    if ( opt == "abc" ) {
-      abcinput.show()
-      definput.hide()
-    } else if ( opt == "def" ) {
-      abcinput.hide()
-      definput.show()
-    };
-    }
-  }
-});
-*/

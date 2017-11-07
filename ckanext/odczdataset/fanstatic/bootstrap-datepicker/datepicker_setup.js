@@ -1,6 +1,6 @@
 //$(document).ready(function() {
 function setDatePicker() {
-  $('div.md_datepicker').datepicker({
+  $('input.md_datepicker').datepicker({
     format: "yyyy-mm-dd",
     maxViewMode: 3,
     todayBtn: "linked",
