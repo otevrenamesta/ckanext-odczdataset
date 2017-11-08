@@ -42,7 +42,7 @@ function setVisibility() {
 };
 
 function setDefaultValues() {
-  if (!$("#field-md_license").val()) {
+  if (document.getElementById("field-license").innerText) {
     $('#field-license').val('cc-by').change(); 
     $('#field-organizations').val('f2a0ae16-dd57-411a-bbe4-b8f4f285f1d8').change(); 
   };  

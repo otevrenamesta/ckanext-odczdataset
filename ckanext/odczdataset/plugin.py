@@ -219,7 +219,7 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
     
     return True
 
-  def after_courceseate(self, context, resource):
+  def after_create(self, context, resource):
     print('Updating SHA256 hash after create')
     self.set_SHA(context, resource)
 
