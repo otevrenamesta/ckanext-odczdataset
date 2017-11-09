@@ -127,8 +127,11 @@ def md_ruian_codes():
     ]
 
 def md_get_item_value_text(options, value):
-  item, = [item for item in options if item['value'] == value]
-  return item['text']
+  x = [item for item in options if item['value'] == value]
+  if x:
+    return x[0]['text']
+  else:
+    return value
 
 def get_is_private_catalog():
   return asbool(config.get('ckan.odczdataset.is_private_catalog', False))
