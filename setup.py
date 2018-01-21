@@ -19,14 +19,25 @@ setup(
     namespace_packages=['ckanext', 'ckanext.odczdataset'],
     # include files form MANIFEST.in
     include_package_data=True,
-    package_data={
-    },
     install_requires=[
         # -*- Extra requirements: -*-
     ],
     entry_points='''
         [ckan.plugins]
-        # Add plugins here, e.g.
         dataset_odczdataset=ckanext.odczdataset.plugin:ODCZDatasetFormPlugin
+        [babel.extractors]
+        ckan = ckan.lib.extract:extract_ckan
     ''',
+
+    # If you are changing from the default layout of your extension, you may
+    # have to change the message extractors, you can read more about babel
+    # message extraction at
+    # http://babel.pocoo.org/docs/messages/#extraction-method-mapping-and-configuration
+    message_extractors={
+        'ckanext': [
+            ('**.py', 'python', None),
+            ('**.js', 'javascript', None),
+            ('**/templates/**.html', 'ckan', None),
+        ],
+    }
 )
