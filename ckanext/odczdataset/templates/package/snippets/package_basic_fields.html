@@ -7,9 +7,9 @@
 
   {% if h.md_get_is_private_catalog() %}
     {{ form.checkbox('md_gdpr', label=_('GDPR'), id='field-md_gdpr', value=true, checked=data.md_gdpr, error=errors.md_gdpr, classes=['control-group']) }}
+    {{ form.select('md_sharing_level', label=_('Stupeň sdílení'), id='field-md_sharing_level',  options=h.md_sharing_levels(), selected=data.md_sharing_level, error=errors.md_sharing_level) }}
     {{ form.checkbox('md_syndicate', label=_('Syndikovat'), id='field-md_syndicate', value=true, checked=data.md_syndicate, error=errors.md_syndicate) }}
     {{ form.input('md_syndicated_id', label=_('ID syndikátu'), id='field-md_syndicated_id', placeholder=_('ID syndikátu'), value=data.md_syndicated_id, error=errors.md_syndicated_id, type='email') }}
-    {{ form.select('md_sharing_level', label=_('Stupeň sdílení'), id='field-md_sharing_level',  options=h.md_sharing_levels(), selected=data.md_sharing_level, error=errors.md_sharing_level) }}
   {% endif %}
 
   {% if data.publisher_name %}
