@@ -17,8 +17,10 @@ setup(
     license='pddl',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     namespace_packages=['ckanext', 'ckanext.odczdataset'],
+    # include files form MANIFEST.in
     include_package_data=True,
-    zip_safe=False,
+    package_data={
+    },
     install_requires=[
         # -*- Extra requirements: -*-
     ],
