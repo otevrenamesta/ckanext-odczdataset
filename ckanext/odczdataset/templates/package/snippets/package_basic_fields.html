@@ -2,13 +2,15 @@
 
 {% block package_basic_fields_custom %}
 
-  {{ form.checkbox('md_syndicate', label=_('Syndikovat'), id='field-md_syndicate', value=true, checked=data.md_syndicate, error=errors.md_syndicate) }} 
-  {{ form.input('md_syndicated_id', label=_('ID syndikátu'), id='field-md_syndicated_id', placeholder=_('ID syndikátu'), value=data.md_syndicated_id, error=errors.md_syndicated_id, type='email') }}
-
   {{ form.input('md_ticket_url', label=_('Tiket'), id='field-md_ticket_url', placeholder=_('URL tiketu'), value=data.md_ticket_url, error=errors.md_ticket_url, type='email') }}
-
-  {{ form.select('md_sharing_level', label=_('Stupeň sdílení'), id='field-md_sharing_level',  options=h.md_sharing_levels(), selected=data.md_sharing_level, error=errors.md_sharing_level) }}
   {{ form.select('md_state', label=_('Stav'), id='field-md_state', options=h.md_states(), selected=data.md_state, error=errors.md_states) }}
+
+  {% if h.md_get_is_private_catalog() %}
+    {{ form.checkbox('md_gdpr', label=_('GDPR'), id='field-md_gdpr', value=true, checked=data.md_gdpr, error=errors.md_gdpr, classes=['control-group']) }}
+    {{ form.select('md_sharing_level', label=_('Stupeň sdílení'), id='field-md_sharing_level',  options=h.md_sharing_levels(), selected=data.md_sharing_level, error=errors.md_sharing_level) }}
+    {{ form.checkbox('md_syndicate', label=_('Syndikovat'), id='field-md_syndicate', value=true, checked=data.md_syndicate, error=errors.md_syndicate) }}
+    {{ form.input('md_syndicated_id', label=_('ID syndikátu'), id='field-md_syndicated_id', placeholder=_('ID syndikátu'), value=data.md_syndicated_id, error=errors.md_syndicated_id, type='email') }}
+  {% endif %}
 
   {% if data.publisher_name %}
     {{ form.input('publisher_name', label=_('Poskytovatel dat'), id='field-publisher_name', placeholder=_('Statutární město Brno'), value=data.publisher_name, error=errors.publisher_name, classes=['control-medium']) }}
@@ -22,42 +24,44 @@
     {{ form.input('publisher_uri', label=_('URI poskytovatele dat'), id='field-publisher_uri', placeholder=_('https://kmd.otevrenamesta.cz'), value='https://kmd.otevrenamesta.cz', error=errors.publisher_uri, classes=['control-medium']) }}
   {% endif %}
 
-  {{ form.checkbox('md_gdpr', label=_('GDPR'), id='field-md_gdpr', value=true, checked=data.md_gdpr, error=errors.md_gdpr, classes=['control-group']) }} 
-  {{ form.input('md_primary_source', label=_('Primární zdroj'), id='field-md_primary_source', placeholder=_('GINIS'), value=data.md_primary_source, error=errors.md_primary_source, classes=['control-medium']) }}
   {{ form.input('license_link', label=_('Odkaz na podmínky užití'), id='field-license_link', placeholder=_('http://www.ctu.cz/otevrena-data/podminky-uziti.html'), value=data.license_link, error=errors.license_link, classes=['control-medium']) }}
   {{ form.select('frequency', label=_('Periodicita aktualizace'), id='field-frequency', options=h.frequencies(), selected=data.frequency, error=errors.frequency) }}
   {{ form.input('spatial_uri', label=_('URI souvisejícího geografického území'), id='field-spatial_uri', placeholder=_('http://ruian.linked.opendata.cz/resource/staty/1'), value=data.spatial_uri, error=errors.spatial_uri, classes=['control-medium']) }}
 
- {% if data.ruian_type %}
-  {{ form.select('ruian_type', label=_('Typ územního prvku RÚIAN'), id='field-ruian_type', options=h.md_ruian_types(), selected=data.ruian_type, error=errors.md_ruian_types) }}
+  {% if data.ruian_type %}
+    {{ form.select('ruian_type', label=_('Typ územního prvku RÚIAN'), id='field-ruian_type', options=h.md_ruian_types(), selected=data.ruian_type, error=errors.md_ruian_types) }}
   {% else %}
-  {{ form.select('ruian_type', label=_('Typ územního prvku RÚIAN'), id='field-ruian_type', options=h.md_ruian_types(), selected='ST', error=errors.md_ruian_types) }}
+    {{ form.select('ruian_type', label=_('Typ územního prvku RÚIAN'), id='field-ruian_type', options=h.md_ruian_types(), selected='ST', error=errors.md_ruian_types) }}
   {% endif %}
 
   {% if data.ruian_code %}
-  {{ form.select('ruian_code', label=_('Kód územního prvku RÚIAN'), id='field-ruian_code', options=h.md_ruian_codes(), selected=data.ruian_code, error=errors.md_ruian_codes) }}
-  {% else %}
-  {{ form.select('ruian_code', label=_('Kód územního prvku RÚIAN'), id='field-ruian_code', options=h.md_ruian_codes(), selected='1', error=errors.md_ruian_codes) }}
+    {{ form.select('ruian_code', label=_('Kód územního prvku RÚIAN'), id='field-ruian_code', options=h.md_ruian_codes(), selected=data.ruian_code, error=errors.md_ruian_codes) }}
+    {% else %}
+    {{ form.select('ruian_code', label=_('Kód územního prvku RÚIAN'), id='field-ruian_code', options=h.md_ruian_codes(), selected='1', error=errors.md_ruian_codes) }}
   {% endif %}
 
   {{ form.input('theme', label=_('URI konceptu klasifikace EUROVOC'), id='field-theme', placeholder=_('http://eurovoc.europa.eu/6139'), value=data.theme, error=errors.theme, classes=['control-medium']) }}
   {{ form.input('schema', label=_('Odkaz na dokumentaci datové sady'), id='field-schema', placeholder=_('http://www.ctu.cz/schema.zip'), value=data.schema, error=errors.schema, classes=['control-medium']) }}
   {{ form.input('temporal_start', label=_('Dotčené časové období datové sady od'), id='field-temporal_start', placeholder=_('2014-01-01'), value=data.temporal_start, error=errors.temporalStart, classes=['control-medium'], attrs={'class': 'md_datepicker'}) }}
   {{ form.input('temporal_end', label=_('Dotčené časové období datové sady do'), id='field-temporal_end', placeholder=_('2014-03-31'), value=data.temporal_end, error=errors.temporalEnd, classes=['control-medium'], attrs={'class': 'md_datepicker'}) }}
-  <div>{{ form.input('md_harvester', label=_('Agregováno u'), id='field-md_harvester', placeholder=_('00025593'), value=data.md_harvester, error=errors.md_harvester, classes=['control-medium']) }}
-					    <span class="info-block info-inline select2-hidden-accessible">
-					      <i class="fa fa-info-circle"></i>
-					      {% trans %}
-					        <a href="http://apl.czso.cz/irsw/" target="blank">vyhledat IČO</a>
-					      {% endtrans %}
-					    </span>
-  </div>
-  {{ form.input('md_harvested_url', label=_('Agregováno na'), id='field-md_harvested_url', placeholder=_('URL'), value=data.md_harvested_url, error=errors.md_harvested_url, classes=['control-medium']) }}
-  {{ form.input('md_delivery', label=_('Výdej'), id='field-md_delivery', placeholder=_('URL výdejního místa'), value=data.md_delivery, error=errors.md_delivery, classes=['control-medium']) }}
 
-  {# system fields - START #}
-  {{ form.input('md_syndicate_manually', label=_('Syndicate manually'), id='field-md_syndicate_manually', placeholder=_(''), value=h.md_get_syndicate_manually(), error=errors.md_syndicate_manually, classes=['select2-hidden-accessible']) }} 
-  {{ form.input('md_is_group_admin', label=_('Is group admin'), id='field-md_is_group_admin', placeholder=_(''), value=h.check_access('organization_member_create', {'id': data.id}), error=errors.md_is_group_admin, classes=['select2-hidden-accessible']) }} 
-  {# system fields - END #}
+  {% if h.md_get_is_private_catalog() %}
+    {{ form.input('md_primary_source', label=_('Primární zdroj'), id='field-md_primary_source', placeholder=_('GINIS'), value=data.md_primary_source, error=errors.md_primary_source, classes=['control-medium']) }}
+    <div>{{ form.input('md_harvester', label=_('Agregováno u'), id='field-md_harvester', placeholder=_('00025593'), value=data.md_harvester, error=errors.md_harvester, classes=['control-medium']) }}
+      <span class="info-block info-inline select2-hidden-accessible">
+      <i class="fa fa-info-circle"></i>
+      {% trans %}
+        <a href="http://apl.czso.cz/irsw/" target="blank">vyhledat IČO</a>
+      {% endtrans %}
+    </span>
+    </div>
+    {{ form.input('md_harvested_url', label=_('Agregováno na'), id='field-md_harvested_url', placeholder=_('URL'), value=data.md_harvested_url, error=errors.md_harvested_url, classes=['control-medium']) }}
+    {{ form.input('md_delivery', label=_('Výdej'), id='field-md_delivery', placeholder=_('URL výdejního místa'), value=data.md_delivery, error=errors.md_delivery, classes=['control-medium']) }}
+
+    {# system fields - START #}
+    {{ form.input('md_syndicate_manually', label=_('Syndicate manually'), id='field-md_syndicate_manually', placeholder=_(''), value=h.md_get_syndicate_manually(), error=errors.md_syndicate_manually, classes=['select2-hidden-accessible']) }}
+    {{ form.input('md_is_group_admin', label=_('Is group admin'), id='field-md_is_group_admin', placeholder=_(''), value=h.check_access('organization_member_create', {'id': data.id}), error=errors.md_is_group_admin, classes=['select2-hidden-accessible']) }}
+    {# system fields - END #}
+  {% endif %}
 
 {% endblock %}

@@ -8,7 +8,7 @@ function setDivVisibility(aItems, show) {
 
 function setVisibility() {
   var allFields = ["field-title", "field-notes", "field-md_syndicate", "field-md_syndicated_id", "field-md_sharing_level", "field-md_state", "field-publisher_name", "field-publisher_uri", "field-maintainer_email", "field-maintainer", "field-md_gdpr", "field-md_primary_source", "field-md_ticket_private", "field-md_ticket_public", "field-frequency", "field-spatial_uri", "field-ruian_type", "field-ruian_code", "field-theme", "field-schema", "field-tags", "field-temporal_start", "field-temporal_end", "field-md_harvester", "field-md_harvested_url", "field-md_delivery", "field-resources", "field-url", "field-format", "field-license_link", "field-name", "field-describedBy", "field-describedByType", "field-md_apps", "field-md_apps_title", "field-md_apps_url", "field-md_apps_email", "field-md_apps_notes", "field-license", "field-organizations", "field-private", "field-version", "field-author", "field-author-email", "field-description"]
-	var aExpert = ["field-md_syndicate", "field-md_syndicated_id", "field-md_state", "field-publisher_uri", "field-md_gdpr", "field-md_primary_source", "field-spatial_uri", "field-ruian_type", "field-ruian_code", "field-theme", "field-schema", "field-tags", "field-md_harvester", "field-md_harvested_url", "field-md_delivery", "field-license_link", "field-describedBy", "field-describedByType", "field-md_apps", "field-md_apps_title", "field-md_apps_url", "field-md_apps_email", "field-md_apps_notes", "field-license", "field-organizations", "field-version", "field-author", "field-author-email", "field-url", "field-format"];
+	var aExpert = ["field-md_syndicate", "field-md_syndicated_id", "field-md_state", "field-publisher_uri", "field-md_gdpr", "field-md_primary_source", "field-spatial_uri", "field-ruian_type", "field-ruian_code", "field-theme", "field-schema", "field-tags", "field-md_harvester", "field-md_harvested_url", "field-md_delivery", "field-license_link", "field-describedBy", "field-describedByType", "field-md_apps", "field-md_apps_title", "field-md_apps_url", "field-md_apps_email", "field-md_apps_notes", "field-license", "field-version", "field-author", "field-author-email", "field-url", "field-format"];
 	var toHide = ["field-url"];
 	var toShow = [];
 	var aChoices = {
@@ -44,7 +44,7 @@ function setVisibility() {
 function setDefaultValues() {
   if (document.getElementById("field-license").innerText) {
     $('#field-license').val('cc-by').change(); 
-    $('#field-organizations').val('f2a0ae16-dd57-411a-bbe4-b8f4f285f1d8').change(); 
+    //$('#field-organizations').val('f2a0ae16-dd57-411a-bbe4-b8f4f285f1d8').change(); //sets Statutarni mestro Brno as default
   };  
 };
 
