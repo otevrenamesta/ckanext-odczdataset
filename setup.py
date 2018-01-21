@@ -24,7 +24,7 @@ setup(
     ],
     entry_points='''
         [ckan.plugins]
-        dataset_odczdataset=ckanext.odczdataset.plugin:ODCZDatasetFormPlugin
+        odczdataset=ckanext.odczdataset.plugin:ODCZDatasetFormPlugin
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan
     ''',
